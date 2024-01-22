@@ -53,37 +53,25 @@
 
         <div class="container">
             <div class="px-4 pt-5 my-5 text-center border-bottom">
-                <h1 class="display-4 fw-bold">GET COUNTRY DATA BY NAME</h1>
+                <h1 class="display-4 fw-bold">Chuck Norris Jokes</h1>
                 <div class="col-lg-6 mx-auto"></div>
 
                 <form
-                    id="countryForm"
-                    action="/countrydata"
-                    method="post"
+                    id="chuckNorrisForm"
+                    action="/chucknorris"
+                    method="get"
                     class="container mt-5"
                 >
-                    <div class="form-group mb-4">
-                        <label for="countryName" class="form-label"
-                            >Country Name:</label
-                        >
-                        <input
-                            type="text"
-                            class="form-control mt-4"
-                            id="countryName"
-                            name="countryName"
-                            placeholder="Enter country name"
-                        />
-                    </div>
                     <button
                         type="button"
                         class="btn btn-primary"
-                        onclick="submitCountryForm(); return false;"
+                        onclick="submitChuckNorrisForm(); return false;"
                     >
-                        Get Country Data
+                        Get Chuck Norris Joke
                     </button>
                 </form>
 
-                <div id="countryResult" class="mt-5"></div>
+                <div id="chuckNorrisResult" class="mt-5"></div>
             </div>
         </div>
 
@@ -98,47 +86,22 @@
             crossorigin="anonymous"
         ></script>
         <script>
-            function submitCountryForm() {
-                const countryName =
-                    document.getElementById("countryName").value;
-
-                fetch("/countrydata", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ countryName }),
-                })
+            function submitChuckNorrisForm() {
+                fetch("/chucknorris")
                     .then((response) => response.json())
                     .then((data) => {
-                        displayCountryData(data);
+                        document.getElementById(
+                            "chuckNorrisResult"
+                        ).innerHTML = `<p>${data.joke}</p>`;
                     })
                     .catch((error) => {
                         console.error(
-                            "Error fetching country data:",
-                            error.message
+                            "Error fetching Chuck Norris joke:",
+                            error
                         );
+                        document.getElementById("chuckNorrisResult").innerHTML =
+                            "<p>Error fetching Chuck Norris joke</p>";
                     });
-            }
-
-            function displayCountryData(countryData) {
-                const resultContainer =
-                    document.getElementById("countryResult");
-                resultContainer.innerHTML = "";
-
-                const countryInfo = document.createElement("div");
-                countryInfo.innerHTML = `
-                    <h3>Country Data:</h3>
-                    <p>Name: ${countryData.name.common}</p>
-                    <p>Capital: ${countryData.capital[0]}</p>
-                    <p>Population: ${countryData.population}</p>
-                    <p>Languages: ${Object.values(countryData.languages).join(
-                        ", "
-                    )}</p>
-                    <!-- Add more details as needed -->
-                `;
-
-                resultContainer.appendChild(countryInfo);
             }
         </script>
     </body>

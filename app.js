@@ -14,6 +14,10 @@ app.get("/country", (req, res) => {
     res.sendFile(__dirname + "/country.html");
 });
 
+app.get("/chack", (req, res) => {
+    res.sendFile(__dirname + "/faceit.html");
+});
+
 // Function to get weather data by city
 function getWeatherByCity(city, res) {
     const url =
@@ -116,6 +120,25 @@ function displayCountryData(res, countryData) {
     console.log("Country Data:", countryData);
     res.json(countryData);
 }
+
+// Function to get Chuck Norris joke
+function getChuckNorrisJoke(res) {
+    const chuckNorrisUrl = "https://api.chucknorris.io/jokes/random";
+
+    https.get(chuckNorrisUrl, function (response) {
+        console.log(response.statusCode);
+
+        response.on("data", function (data) {
+            const jokeData = JSON.parse(data);
+            res.json({ joke: jokeData.value });
+        });
+    });
+}
+
+// Route for Chuck Norris joke
+app.get("/chucknorris", (req, res) => {
+    getChuckNorrisJoke(res);
+});
 
 // Route for city weather
 app.post("/weather", (req, res) => {
