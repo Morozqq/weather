@@ -115,6 +115,17 @@
                     </button>
                 </form>
                 <div id="result"></div>
+                <iframe
+                    width="450"
+                    height="250"
+                    frameborder="0"
+                    id="googlemap"
+                    style="border: 0"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src=""
+                    hidden
+                >
+                </iframe>
             </div>
         </div>
 
@@ -152,6 +163,17 @@
                 <p> Wind Speed: ${data.windSpeed} m/s </p>
                 <p> Country Code: ${data.countryCode} </p>
                 <p> Rain (last 3 hours): ${data.rainVolume} mm </p>`;
+
+                        const map = document.getElementById("googlemap");
+                        map.setAttribute(
+                            "src",
+                            "https://www.google.com/maps/embed/v1/view?key=AIzaSyDTT0fDlueO7Q_Aa5fSKuCepGObxLlusBI&zoom=8" +
+                                "&center=" +
+                                data.coordinates.lat +
+                                "," +
+                                data.coordinates.lon
+                        );
+                        map.removeAttribute("hidden");
                     })
                     .catch((error) => {
                         console.error("Error:", error);
@@ -183,6 +205,16 @@
                             <p> Wind Speed: ${data.windSpeed} m/s </p>
                             <p> Country Code: ${data.countryCode} </p>
                             <p> Rain (last 3 hours): ${data.rainVolume} mm </p>`;
+                        const map = document.getElementById("googlemap");
+                        map.setAttribute(
+                            "src",
+                            "https://www.google.com/maps/embed/v1/view?key=AIzaSyDTT0fDlueO7Q_Aa5fSKuCepGObxLlusBI&zoom=8" +
+                                "&center=" +
+                                data.coordinates.lat +
+                                "," +
+                                data.coordinates.lon
+                        );
+                        map.removeAttribute("hidden");
                     })
                     .catch((error) => {
                         console.error("Error:", error);
